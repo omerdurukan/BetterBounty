@@ -1,3 +1,4 @@
+
 package dev.vireon.bounty.placeholder;
 
 import dev.vireon.bounty.BountyPlugin;
@@ -37,16 +38,21 @@ public class BetterBountyPlaceholder extends PlaceholderExpansion {
     @Override
     public @Nullable String onRequest(OfflinePlayer player, @NotNull String params) {
         if (params.equalsIgnoreCase("amount")) {
-            if (player == null) return "0";
 
-            return String.valueOf(
-                    plugin.getBountyManager()
-                            .getBounty(player.getUniqueId())
-                            .getAmount()
-            );
+            if (player == null) {
+                return "0";
+            }
+
+            var bounty = plugin.getBountyManager()
+                    .getBounty(player.getUniqueId());
+
+            if (bounty == null) {
+                return "0";
+            }
+
+            return String.valueOf(bounty.getAmount());
         }
 
         return null;
     }
-
 }
